@@ -8,6 +8,7 @@
 <script lang="ts">
 import { ref } from 'vue';
 import test from '../../../../test.vue';
+// import test from './test.vue';
 export default {
   props: {},
   components: {

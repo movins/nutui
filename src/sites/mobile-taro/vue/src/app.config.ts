@@ -1,5 +1,6 @@
 export default {
   pages: [
+    'pages/testsolt/index',
     'pages/uploader/index',
     'pages/infiniteloading/index',
     'pages/address/index',

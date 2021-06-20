@@ -17,7 +17,7 @@
     "vue component",
     "vue3 component"
   ],
-  "author": "lovisliao@163.com",
+  "author": "jdcfe",
   "license": "MIT",
   "publishConfig": {
     "access": "public",

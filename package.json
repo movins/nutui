@@ -1,6 +1,6 @@
 {
   "name": "@jemoo/emoui",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "npm": {
     "tag": "next"
   },
@@ -10,19 +10,14 @@
   "style": "dist/style.css",
   "typings": "dist/index.d.ts",
   "keywords": [
-    "nutui",
-    "nutui2",
-    "nutui3",
+    "emoui",
     "vue",
     "vue3",
     "webpack",
     "vue component",
-    "vue3 component",
-    "vite",
-    "jdc",
-    "jdcfe"
+    "vue3 component"
   ],
-  "author": "jdcfe",
+  "author": "lovisliao@163.com",
   "license": "MIT",
   "publishConfig": {
     "access": "public",
@@ -127,6 +122,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jdf2e/nutui.git"
+    "url": "https://github.com/movins/nutui.git"
   }
 }

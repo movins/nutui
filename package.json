@@ -1,6 +1,6 @@
 {
-  "name": "@nutui/nutui",
-  "version": "2.2.13",
+  "name": "@jemoo/emoui",
+  "version": "1.0.3",
   "description": "一套轻量级移动端Vue组件库",
   "typings": "dist/types/index.d.ts",
   "main": "dist/nutui.js",
@@ -32,17 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jdf2e/nutui.git"
+    "url": "https://github.com/movins/nutui.git"
   },
   "keywords": [
-    "nutui",
-    "nutui2",
     "vue",
     "webpack",
-    "vue component",
-    "jdc",
-    "jdcfe",
-    "jdl"
+    "vue component"
   ],
   "author": "jdcfe",
   "license": "MIT",

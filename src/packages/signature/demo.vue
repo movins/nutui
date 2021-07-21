@@ -51,7 +51,7 @@ export default {
 
 <style lang="scss">
 .demo-tips {
-  font-size: 12px;
+  font-size: $font-size-small;
 }
 .margin-top {
   margin-top: 30px;

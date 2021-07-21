@@ -66,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 .boardValue {
   padding: 2px 10px;
-  font-size: 14px;
+  font-size: $font-size-base;
   background: #ffffff;
   input {
     border: none;
@@ -75,7 +75,7 @@ export default {
   //   width: 20%;
   //   display: inline-block;
   //   line-height: 1.5;
-  //   font-size: 14px;
+  //   font-size: $font-size-base;
   //   color: #2d2d2d;
   // }
   // .value {

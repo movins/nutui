@@ -48,7 +48,7 @@ export default {
     height: 50px;
     border: 1px solid mix($primary-color, #fff, 40%);
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: $font-size-small;
     color: mix($primary-color, #fff, 80%);
     line-height: 50px;
     text-align: center;

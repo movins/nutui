@@ -83,14 +83,14 @@ export default {
       showIconPosition: false,
       showCloseIcon: false,
       getContainer: false,
-      showCombination: false,
+      showCombination: false
     };
   },
   methods: {
     show() {
       this.isShow = true;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -107,7 +107,7 @@ export default {
     align-items: center;
     span {
       color: #646464;
-      font-size: 13px;
+      font-size: $font-size-small;
     }
     img {
       width: 60px;

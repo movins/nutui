@@ -49,16 +49,16 @@
       }
     }
     &.nut-progress-small {
-      height: 12px;
+      height: $font-size-small;
       .nut-progress-text {
-        font-size: 12px;
-        line-height: 12px;
+        font-size: $font-size-small;
+        line-height: $font-size-small;
       }
     }
     &.nut-progress-base {
       height: 16px;
       .nut-progress-text {
-        font-size: 12px;
+        font-size: $font-size-small;
         line-height: 16px;
       }
     }
@@ -75,7 +75,7 @@
   }
   .nut-progress-text {
     padding: 0 5px;
-    font-size: 12px;
+    font-size: $font-size-small;
     line-height: 1;
   }
   .nut-icon-success,

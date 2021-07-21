@@ -27,7 +27,7 @@
   padding-left: 20px;
   background: #f6f6f6;
   margin: 0px;
-  font-size: 14px;
+  font-size: $font-size-base;
   color: #323233;
 }
 .nut-people-list {
@@ -35,7 +35,7 @@
   padding-left: 20px;
 }
 .nut-list-name {
-  font-size: 14px;
+  font-size: $font-size-base;
   color: #323233;
   list-style-type: none;
   height: 44px;
@@ -64,7 +64,7 @@
   text-align: center;
   //border:1px solid #ccc;
   width: 50px;
-  font-size: 12px;
+  font-size: $font-size-small;
   position: fixed;
   top: 50%;
   right: 0px;

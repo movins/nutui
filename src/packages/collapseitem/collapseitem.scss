@@ -20,7 +20,7 @@
     overflow: hidden;
     padding: 10px 16px;
     color: #323233;
-    font-size: 14px;
+    font-size: $font-size-base;
     line-height: 24px;
     background-color: #fff;
     box-sizing: border-box;
@@ -57,7 +57,7 @@
     .collapse-content {
       padding: 12px 16px;
       color: #969799;
-      font-size: 14px;
+      font-size: $font-size-base;
       line-height: 1.5;
       background-color: #fff;
     }

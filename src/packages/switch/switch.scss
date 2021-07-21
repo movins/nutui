@@ -18,7 +18,7 @@
     text-align: center !important;
     color: #999 !important;
     font-style: normal !important;
-    font-size: 12px;
+    font-size: $font-size-small;
     // bottom: 2px;
   }
   .nut-switch-btn {
@@ -51,7 +51,7 @@
   height: 14px;
   min-width: 30px;
   .nut-switch-label {
-    font-size: 10px;
+    font-size: $font-size-small;
     top: -2px;
     margin-left: -25px;
   }
@@ -87,7 +87,7 @@
   height: 28px;
   line-height: 28px;
   min-width: 58px;
-  font-size: 14px;
+  font-size: $font-size-base;
   .nut-switch-label {
     margin-right: 8px;
     left: 6px;

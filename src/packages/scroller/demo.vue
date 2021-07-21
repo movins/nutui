@@ -204,7 +204,7 @@ export default {
   width: 20px;
   padding: 0 5px;
   margin-left: 10px;
-  font-size: 12px;
+  font-size: $font-size-small;
   text-align: center;
   color: $primary-color;
   background-color: #fff;
@@ -226,11 +226,11 @@ dd {
   padding-left: 10px;
   line-height: 20px;
   dt {
-    font-size: 14px;
+    font-size: $font-size-base;
   }
   dd {
     margin-left: 0;
-    font-size: 12px;
+    font-size: $font-size-small;
   }
 }
 .vert-panel {

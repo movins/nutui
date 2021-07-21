@@ -100,7 +100,7 @@ export default {
   line-height: 2;
   text-align: center;
   p {
-    font-size: 14px;
+    font-size: $font-size-base;
   }
 }
 </style>

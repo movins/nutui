@@ -173,7 +173,7 @@ export default {
   //   left: 10px;
   //   top: 20px;
   //   width: calc(100% - 20px);
-  //   font-size: 12px;
+  //   font-size: $font-size-small;
   //   text-align: center;
   //   color: #ff5722;
   // }

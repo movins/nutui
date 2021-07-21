@@ -11,7 +11,7 @@
     text-align: center;
     border: 1px solid $primary-color;
     color: $primary-color;
-    font-size: 10px;
+    font-size: $font-size-small;
     border-radius: 10px;
     z-index: $zindex-mask;
   }

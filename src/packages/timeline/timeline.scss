@@ -1,7 +1,7 @@
 .nut-timeline {
   .nut-timelineitem {
     position: relative;
-    font-size: 12px;
+    font-size: $font-size-small;
 
     .timelineitem-list-box {
       padding: 0 18px 0 0px;
@@ -60,7 +60,7 @@
             line-height: 13px;
             position: relative;
             .time {
-              font-size: 12px;
+              font-size: $font-size-small;
               color: #666;
             }
           }

@@ -129,6 +129,6 @@ button {
   height: 32px;
   border-radius: 4px;
   color: #fff;
-  font-size: 14px;
+  font-size: $font-size-base;
 }
 </style>

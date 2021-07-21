@@ -111,7 +111,7 @@ table {
     vertical-align: middle;
     height: 100px;
     border: 1px solid #ebebeb;
-    font-size: 12px;
+    font-size: $font-size-small;
     &:hover {
       background: #f2f2f2;
       cursor: pointer;

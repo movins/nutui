@@ -22,7 +22,7 @@
       position: absolute;
       right: 10px;
       bottom: 5px;
-      font-size: 12px;
+      font-size: $font-size-small;
     }
     &.error {
       border: 1px solid #e2231a;

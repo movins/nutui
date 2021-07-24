@@ -54,7 +54,7 @@ export default {
       currIndex: 1,
       transformY: 0,
       scrollDistance: 0,
-      lineSpacing: 36,
+      lineSpacing: this.$fontSize && (this.$fontSize + 20) || 34,
       rotation: 20,
       timer: null
     };

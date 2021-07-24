@@ -248,6 +248,10 @@ const install = function(Vue, opts = {}) {
     Vue.prototype.$remUnit = opts.remUnit;
   }
 
+  if (opts.fontSize) {
+    Vue.prototype.$fontSize = opts.fontSize;
+  }
+
   if (opts.lang) locale(Vue.config.lang, opts.lang);
 
   for (let cptName in methods) {

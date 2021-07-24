@@ -244,6 +244,10 @@ const install = function(Vue, opts = {}) {
     Vue.config.lang = opts.locale;
   }
 
+  if (opts.remUnit) {
+    Vue.prototype.$remUnit = opts.remUnit;
+  }
+
   if (opts.lang) locale(Vue.config.lang, opts.lang);
 
   for (let cptName in methods) {

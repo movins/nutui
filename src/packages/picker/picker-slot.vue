@@ -80,7 +80,8 @@ export default {
     },
 
     setRollerStyle(index) {
-      return `transform: rotate3d(1, 0, 0, ${-this.rotation * index}deg) translate3d(0px, 0px, 104px)`;
+      const val = (this.$remUnit && `${104 / this.$remUnit}rem`) || '104px'
+      return `transform: rotate3d(1, 0, 0, ${-this.rotation * index}deg) translate3d(0px, 0px, ${val})`;
     },
 
     isHidden(index) {
@@ -99,7 +100,8 @@ export default {
         this.$refs.list.style.webkitTransition = '';
         this.$refs.roller.style.webkitTransition = '';
       }
-      this.$refs.list.style.webkitTransform = `translate3d(0, ${translateY}px, 0)`;
+      const val = (this.$remUnit && `${translateY / this.$remUnit}rem`) || `${translateY}px`
+      this.$refs.list.style.webkitTransform = `translate3d(0, ${val}, 0)`;
       this.$refs.roller.style.webkitTransform = `rotate3d(1, 0, 0, ${deg})`;
       this.scrollDistance = translateY;
     },

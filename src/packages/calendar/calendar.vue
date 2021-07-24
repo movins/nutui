@@ -11,7 +11,13 @@
           <span v-for="(item, index) of week" :key="index">{{ item }}</span>
         </div>
       </div>
-      <div class="nut-calendar-months" @touchstart.stop="touchStart" @touchmove.stop.prevent="touchMove" @touchend.stop="touchEnd">
+      <div class="nut-calendar-months" 
+        @touchstart.stop="touchStart"
+        @mousedown.stop="touchStart" 
+        @touchmove.stop.prevent="touchMove"
+        @mousemove="touchMove"
+        @touchend.stop="touchEnd"
+        @mouseup.stop="touchEnd">
         <div class="nut-calendar-months-panel" ref="months">
           <div class="nut-calendar-loading-tip">{{
             !unLoadPrev ? nutTranslate('lang.calendar.loadPrevMonth') : nutTranslate('lang.calendar.noMoreMonth')
@@ -112,7 +118,8 @@ export default {
       defaultData: null,
       chooseData: [],
       monthsData: [],
-      dayPrefix: 'nut-calendar-month-day'
+      dayPrefix: 'nut-calendar-month-day',
+      touchDowned: false
     };
   },
   computed: {
@@ -298,15 +305,23 @@ export default {
     },
 
     touchStart(event) {
-      let changedTouches = event.changedTouches[0];
+      this.touchDowned = true;
+      let {changedTouches = []} = event
+      changedTouches = (changedTouches.length && event.changedTouches[0]) || event
+
       this.touchParams.startY = changedTouches.pageY;
       this.touchParams.startTime = event.timestamp || Date.now();
       this.transformY = this.scrollDistance;
     },
 
     touchMove(event) {
+      if (!this.touchDowned) {
+        return
+      }
       //event.preventDefault();
-      let changedTouches = event.changedTouches[0];
+      let {changedTouches = []} = event
+      changedTouches = (changedTouches.length && event.changedTouches[0]) || event
+
       this.touchParams.lastY = changedTouches.pageY;
       this.touchParams.lastTime = event.timestamp || Date.now();
       let move = this.touchParams.lastY - this.touchParams.startY;
@@ -317,7 +332,10 @@ export default {
     },
 
     touchEnd(event) {
-      let changedTouches = event.changedTouches[0];
+      this.touchDowned = false
+      let {changedTouches = []} = event
+      changedTouches = (changedTouches.length && event.changedTouches[0]) || event
+
       this.touchParams.lastY = changedTouches.pageY;
       this.touchParams.lastTime = event.timestamp || Date.now();
       let move = this.touchParams.lastY - this.touchParams.startY;

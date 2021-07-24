@@ -1,5 +1,5 @@
 <template>
-  <div class="nut-drag" @touchstart="touchStart($event)">
+  <div class="nut-drag" @touchstart="touchStart($event)" @mousedown="touchStart($event)">
     <slot></slot>
   </div>
 </template>
@@ -55,7 +55,8 @@ export default {
       screenHeight: 0,
       startTop: 0,
       startLeft: 0,
-      position: { x: 0, y: 0 }
+      position: { x: 0, y: 0 },
+      touchDowned: false
     };
   },
   methods: {
@@ -82,19 +83,34 @@ export default {
       }
     },
     touchStart(e) {
+      this.touchDowned = true;
       const target = e.currentTarget;
       this.startTop = target.offsetTop; // 元素距离顶部的距离
       this.startLeft = target.offsetLeft; // 元素距离左侧的距离
-      this.position.x = e.touches[0].clientX; // 鼠标点击的x轴的距离
-      this.position.y = e.touches[0].clientY; // 鼠标点击的y轴的距离
+
+      let {touches = []} = e;
+      touches = (touches.length && touches[0]) || e;
+
+      this.position.x = touches.clientX; // 鼠标点击的x轴的距离
+      this.position.y = touches.clientY; // 鼠标点击的y轴的距离
       this.$el.addEventListener('touchmove', this.touchMove, false);
+      this.$el.addEventListener('mousemove', this.touchMove, false);
+
       this.$el.addEventListener('touchend', this.touchEnd, false);
+      this.$el.addEventListener('mouseup', this.touchEnd, false);
     },
     touchMove(e) {
       e.preventDefault();
-      const target = e.currentTarget;
-      if (e.targetTouches.length == 1) {
-        const touch = e.targetTouches[0];
+      if (!this.touchDowned) {
+        return;
+      }
+
+      let {targetTouches} = e
+      targetTouches = targetTouches || [e]
+
+      const target = e.currentTarget || e.target;
+      if (targetTouches.length == 1 && target) {
+        const touch = targetTouches[0];
         this.nx = touch.clientX - this.position.x;
         this.ny = touch.clientY - this.position.y;
         this.xPum = this.startLeft + this.nx;
@@ -121,9 +137,13 @@ export default {
       }
     },
     touchEnd(e) {
+      this.touchDowned = false;
       const target = e.currentTarget;
-      const touch = e.changedTouches[0];
-      let currX = touch.clientX;
+
+      let {changedTouches = []} = e;
+      changedTouches = (changedTouches.length && changedTouches[0]) || e;
+      let currX = changedTouches.clientX;
+
       const rightLocation = this.screenWidth - this.elWidth - this.boundary.right;
       if (currX > rightLocation) {
         currX = rightLocation;
@@ -189,11 +209,17 @@ export default {
   deactivated() {
     this.keepAlive = true;
     this.$el.removeEventListener('touchmove', this.handleScroll, false);
+    this.$el.removeEventListener('mousemove', this.handleScroll, false);
+
     this.$el.removeEventListener('touchend', this.handleScroll, false);
+    this.$el.removeEventListener('mouseup', this.handleScroll, false);
   },
   destroyed() {
     this.$el.removeEventListener('touchmove', this.handleScroll, false);
+    this.$el.removeEventListener('mousemove', this.handleScroll, false);
+
     this.$el.removeEventListener('touchend', this.handleScroll, false);
+    this.$el.removeEventListener('mouseup', this.handleScroll, false);
   }
 };
 </script>

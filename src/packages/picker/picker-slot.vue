@@ -56,7 +56,8 @@ export default {
       scrollDistance: 0,
       lineSpacing: this.$fontSize && (this.$fontSize + 20) || 34,
       rotation: 20,
-      timer: null
+      timer: null,
+      touchDowned: false,
     };
   },
   watch: {
@@ -146,18 +147,23 @@ export default {
     touchStart(event) {
       event.preventDefault();
 
-      let changedTouches = event.changedTouches[0];
+      this.touchDowned = true;
+      let {changedTouches = []} = event 
+      changedTouches = (changedTouches.length && changedTouches[0]) || event;
       this.touchParams.startY = changedTouches.pageY;
-      this.touchParams.startTime = event.timestamp || Date.now();
+      this.touchParams.startTime = event.timestamp || event.timeStamp || Date.now();
       this.transformY = this.scrollDistance;
     },
 
     touchMove(event) {
       event.preventDefault();
-
-      let changedTouches = event.changedTouches[0];
+      if (!this.touchDowned) {
+        return
+      }
+      let {changedTouches = []} = event 
+      changedTouches = (changedTouches.length && changedTouches[0]) || event;
       this.touchParams.lastY = changedTouches.pageY;
-      this.touchParams.lastTime = event.timestamp || Date.now();
+      this.touchParams.lastTime = event.timestamp || event.timeStamp || Date.now();
       let move = this.touchParams.lastY - this.touchParams.startY;
 
       this.setMove(move);
@@ -166,9 +172,11 @@ export default {
     touchEnd(event) {
       event.preventDefault();
 
-      let changedTouches = event.changedTouches[0];
+      this.touchDowned = false;
+      let {changedTouches = []} = event 
+      changedTouches = (changedTouches.length && changedTouches[0]) || event;
       this.touchParams.lastY = changedTouches.pageY;
-      this.touchParams.lastTime = event.timestamp || Date.now();
+      this.touchParams.lastTime = event.timestamp || event.timeStamp || Date.now();
       let move = this.touchParams.lastY - this.touchParams.startY;
 
       let moveTime = this.touchParams.lastTime - this.touchParams.startTime;
@@ -206,15 +214,26 @@ export default {
       this.modifyStatus(true);
       // 监听
       this.$el.addEventListener('touchstart', this.touchStart);
+      this.$el.addEventListener('mousedown', this.touchStart);
+
       this.$el.addEventListener('touchmove', this.touchMove);
+      this.$el.addEventListener('mousemove', this.touchMove);
+
       this.$el.addEventListener('touchend', this.touchEnd);
+      this.$el.addEventListener('mouseup', this.touchEnd);
     });
   },
   beforeDestroy() {
     // 移除监听
     this.$el.removeEventListener('touchstart', this.touchStart);
+    this.$el.removeEventListener('mousedown', this.touchStart);
+
     this.$el.removeEventListener('touchmove', this.touchMove);
+    this.$el.removeEventListener('mousemove', this.touchMove);
+
     this.$el.removeEventListener('touchend', this.touchEnd);
+    this.$el.removeEventListener('mouseup', this.touchEnd);
+
     clearTimeout(this.timer);
   }
 };

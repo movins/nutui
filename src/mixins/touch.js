@@ -16,20 +16,29 @@ function getDirection(x, y) {
 
 const TouchMixin = Vue.extend({
   data() {
-    return { direction: '' };
+    return { direction: '', touchDowned: false };
   },
 
   methods: {
     touchStart(event) {
       this.resetTouchStatus();
-      this.startX = event.touches[0].clientX;
+      this.touchDowned = true
+      let {touches = []} = event 
+      touches = (touches.length && touches[0]) || event;
+
+      this.startX = touches && touches.clientX;
       this.startY = event.touches[0].clientY;
     },
 
     touchMove(event) {
-      const touch = event.touches[0];
-      this.deltaX = touch.clientX - this.startX;
-      this.deltaY = touch.clientY - this.startY;
+      if (!this.touchDowned) {
+        return
+      }
+      let {touches = []} = event 
+      touches = (touches.length && touches[0]) || event;
+
+      this.deltaX = touches.clientX - this.startX;
+      this.deltaY = touches.clientY - this.startY;
       this.offsetX = Math.abs(this.deltaX);
       this.offsetY = Math.abs(this.deltaY);
       this.direction = this.direction || getDirection(this.offsetX, this.offsetY);
@@ -41,6 +50,7 @@ const TouchMixin = Vue.extend({
       this.deltaY = 0;
       this.offsetX = 0;
       this.offsetY = 0;
+      this.touchDowned = false
     }
   }
 });

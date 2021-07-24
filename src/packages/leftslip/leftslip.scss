@@ -28,7 +28,7 @@
     background: #ff4949;
     color: #fff;
     padding: 0 5px;
-    font-size: 14px;
+    font-size: $font-size-base;
     span {
       // width: 40px;
       display: flex;
@@ -53,7 +53,7 @@
     background: #ff4949;
     color: #fff;
     padding: 0 5px;
-    font-size: 14px;
+    font-size: $font-size-base;
   }
   .slipbtns {
     position: absolute;
@@ -72,7 +72,7 @@
       color: #fff;
       height: 100%;
       padding: 0 5px;
-      font-size: 14px;
+      font-size: $font-size-base;
       align-items: center;
       justify-content: center;
       text-align: center;

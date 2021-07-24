@@ -272,7 +272,7 @@ export default {
     width: 100%;
     height: 100%;
     color: #fff;
-    font-size: 16px;
+    font-size: $font-size-large;
     text-align: center;
     line-height: 100px;
     background: rgba(0, 0, 0, 0.2);

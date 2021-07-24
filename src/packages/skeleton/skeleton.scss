@@ -5,7 +5,7 @@
   bottom: 0;
   left: 0;
   z-index: $zindex-mask;
-  font-size: 12px;
+  font-size: $font-size-small;
   background: #fff;
   @keyframes backpos {
     from {

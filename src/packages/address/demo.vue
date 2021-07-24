@@ -249,7 +249,7 @@ export default {
     margin-bottom: 10px;
     background: #fff;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: $font-size-base;
     padding: 10px;
 
     &.init {

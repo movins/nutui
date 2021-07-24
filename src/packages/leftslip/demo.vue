@@ -153,12 +153,12 @@ export default {
   }
 
   .name-mobile {
-    font-size: 15px;
+    font-size: $font-size-base;
     color: #333;
   }
 
   .full-addr {
-    font-size: 14px;
+    font-size: $font-size-base;
     color: #666;
     margin-top: 10px;
     line-height: 22px;

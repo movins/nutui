@@ -1,7 +1,7 @@
 <template>
   <div class="demo-list-pd">
     <h4>基本用法</h4>
-    <nut-imagepicker @imgMsg="imgMsg" :imgList.sync="imgList1"></nut-imagepicker>
+    <nut-imagepicker @imgMsg="imgMsg" :imgList.sync="imgList1" :camera="true" @on-click="handleImageClick"></nut-imagepicker>
     <h4>指定宽度和高度都是120px,图片间距是10px</h4>
     <nut-imagepicker @imgMsg="imgMsg" :width="120" :height="120" :margin="10" :imgList.sync="imgList2"></nut-imagepicker>
     <h4>允许上传的最大数量是4张</h4>
@@ -35,6 +35,9 @@ export default {
     };
   },
   methods: {
+    handleImageClick (index) {
+      this.$toast.text(`点击添加图片 index=${index}`)
+    },
     imgMsg(data) {
       if (data.code == 1) {
         alert('upload');

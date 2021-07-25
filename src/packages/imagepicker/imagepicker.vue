@@ -15,7 +15,7 @@
           <a href="javascript:;"><img :src="item.src" alt=""/></a>
         </div>
       </transition-group>
-      <div class="add-icon" :style="{ width: width + 'px', height: height + 'px' }" v-show="this.list.length < this.max">
+      <div class="add-icon" :style="{ width: width + 'px', height: height + 'px' }" v-show="this.list.length < this.max" @click="handleImageClick">
         <i
           ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
             <g fill-rule="evenodd">
@@ -23,7 +23,7 @@
               <rect transform="rotate(90 8 8)" y="6" width="16" height="4" rx="2"></rect>
             </g></svg
         ></i>
-        <input type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
+        <input v-if="!camera" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
       </div>
     </div>
   </div>
@@ -47,6 +47,10 @@ export default {
     margin: {
       type: [String, Number],
       default: 5
+    },
+    camera: {
+      type: Boolean,
+      default: false
     },
     max: {
       //允许上传的最大数量
@@ -98,6 +102,18 @@ export default {
     this.list = this.imgList;
   },
   methods: {
+    add (files) {
+      if (files.length > this.max - this.list.length) {
+        files = files.filter((item, index) => index < this.max - this.list.length);
+      }
+
+      files.forEach((url, index) => {
+        this.list.push({
+          id: Math.random(),
+          src: url
+        });
+      });
+    },
     addImg(event) {
       let self = this;
       //限制图片上传数量
@@ -140,6 +156,9 @@ export default {
           msg: fileArr
         });
       }
+    },
+    handleImageClick (e) {
+      this.$emit('on-click', this.list.length)
     },
     preview(id) {
       this.$emit('imgMsg', {

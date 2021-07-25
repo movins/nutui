@@ -31,6 +31,17 @@
       "author": "Frans、肖晓"
     },
     {
+      "name": "Camera",
+      "version": "1.0.0",
+      "sort": "2",
+      "chnName": "照相机",
+      "type": "method",
+      "showDemo": true,
+      "desc": "照相机，支持拍照",
+      "star": 0,
+      "author": "movinliao"
+    },
+    {
       "name": "Icon",
       "version": "1.0.0",
       "sort": "5",

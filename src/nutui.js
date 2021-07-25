@@ -5,6 +5,8 @@ import Cell from './packages/cell/index.js';
 import './packages/cell/cell.scss';
 import Dialog from './packages/dialog/index.js';
 import './packages/dialog/dialog.scss';
+import Camera from './packages/camera/index.js';
+import './packages/camera/camera.scss';
 import Icon from './packages/icon/index.js';
 import './packages/icon/icon.scss';
 import Toast from './packages/toast/index.js';
@@ -144,6 +146,7 @@ import './packages/collapseitem/collapseitem.scss';
 const packages = {
   Cell,
   Dialog,
+  Camera,
   Icon,
   Toast,
   ActionSheet,

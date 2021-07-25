@@ -23,12 +23,14 @@
               <rect transform="rotate(90 8 8)" y="6" width="16" height="4" rx="2"></rect>
             </g></svg
         ></i>
-        <input v-if="!camera" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
+        <input v-if="!camera || !hasCamera" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
       </div>
     </div>
   </div>
 </template>
 <script>
+import { enumerateDevices } from '../../utils/devices';
+
 export default {
   name: 'nut-imagepicker',
   props: {
@@ -90,6 +92,7 @@ export default {
   data() {
     return {
       timeOutEvent: 0,
+      hasCamera: false,
       list: []
     };
   },
@@ -100,8 +103,13 @@ export default {
   },
   mounted() {
     this.list = this.imgList;
+    this.camera && this.testDevice()
   },
   methods: {
+    async testDevice () {
+      const [, videoNum,] = await enumerateDevices();
+      this.hasCamera = videoNum > 0
+    },
     add (files) {
       if (files.length > this.max - this.list.length) {
         files = files.filter((item, index) => index < this.max - this.list.length);

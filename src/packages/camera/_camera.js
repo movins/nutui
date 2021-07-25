@@ -20,13 +20,15 @@ let Camera = function(options) {
         document.body.appendChild(inst.$el);
     }
 
-    Vue.nextTick(() => {
-        inst.visible = true;
-    });
+    return inst;
+    // Vue.nextTick(() => {
+    //     inst.visible = true;
+    // });
 };
-Camera.closed = function() {
-    if (inst) {
-        inst.close()
-    }
+Camera.show = function () {
+    return (inst && inst.show()) || false;
+}
+Camera.closed = function () {
+    inst && inst.close();
 }
 export default Camera;

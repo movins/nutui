@@ -43,12 +43,14 @@ export default {
     };
   },
   methods: {
-    showCamera1: function() {
+    showCamera1: async function() {
       const options = {
         closeOnPopstate: true
       };
 
-      this.$camera(options);
+      const result = await this.$camera(options).show();
+
+      console.info('000000000000000000000000', result);
     }
   }
 };

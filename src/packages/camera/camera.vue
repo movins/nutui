@@ -15,6 +15,7 @@
 </template>
 <script>
 import locale from '../../mixins/locale';
+import { getUserMedia } from '../../utils/devices';
 
 const lockMaskScroll = (bodyCls => {
   let scrollTop;
@@ -120,7 +121,6 @@ export default {
         that.close();
       });
     }
-    this.startCamera()
   },
   computed: {
     canvas () {
@@ -128,24 +128,6 @@ export default {
     }
   },
   methods: {
-    //访问用户媒体设备的兼容方法
-    async getUserMedia(constrains){
-      let result = null;
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        //最新标准API
-        result = await navigator.mediaDevices.getUserMedia(constrains);
-      } else if (navigator.webkitGetUserMedia) {
-        //webkit内核浏览器
-        result = await navigator.webkitGetUserMedia(constrains);
-      } else if (navigator.mozGetUserMedia) {
-        //Firefox浏览器
-        result = await navagator.mozGetUserMedia(constrains);
-      } else if (navigator.getUserMedia) {
-        //旧版API
-        result = await navigator.getUserMedia(constrains);
-      }
-      return result;
-    },
     toDataURL (source, w, h, type) {
       this.canvas.width = w || 0;
       this.canvas.height = h || 0;
@@ -164,12 +146,7 @@ export default {
     },
     // 获取录像流到video中
     async startCamera () {
-      const stream = await this.getUserMedia({ video: { width: this.width, height: this.height } });
-      if (!stream) return
-      const video = this.$refs.video;
-      const CompatibleURL = window.URL || window.webkitURL;
-      video.src = CompatibleURL.createObjectURL(stream);
-      video.play();
+
     },
     modalClick() {
       if (!this.closeOnClickModal) {
@@ -189,6 +166,23 @@ export default {
       }
       this.curVisible = false;
     },
+    async show () {
+      this.curVisible = true;
+      let result = false;
+      try {
+        const stream = await getUserMedia({ video: { width: this.width, height: this.height } });
+        if (stream) {
+          const video = this.$refs.video;
+          const CompatibleURL = window.URL || window.webkitURL;
+          video.src = CompatibleURL.createObjectURL(stream);
+          video.play();
+          result = true;
+        }
+      } catch (error) {
+      }
+      return result;
+    },
+
     cancelBtnClick(autoClose) {
       this.$emit('cancel-btn-click');
       if (!autoClose) {

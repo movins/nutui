@@ -134,24 +134,28 @@ export default {
       }
     },
     navBarStyle: function() {
+      const transform = (this.$remUnit && `${this.initX / this.$remUnit}rem`) || `${this.initX}px`
+      let val = this.lineWidth ? this.lineWidth : this.navWidth
+      
       if (this.positionNav === 'top' || this.positionNav === 'bottom') {
+        const width = (this.$remUnit && `${val / this.$remUnit}rem`) || `${val}px`
         return {
-          transform: `translateX(${this.initX}px)`,
+          transform: `translateX(${transform})`,
           //width: this.navWidth + 'px'
-          width: (this.lineWidth ? this.lineWidth : this.navWidth) + 'px'
+          width
         };
       }
+      const height = (this.$remUnit && `${val / this.$remUnit}rem`) || `${val}px`
       return {
-        transform: `translateY(${this.initX}px)`,
+        transform: `translateY(${transform})`,
         //height: this.navWidth + 'px'
-        height: (this.lineWidth ? this.lineWidth : this.navWidth) + 'px'
+        height
       };
     },
     customHeight: function() {
       if (this.isScroll && (this.positionNav === 'left' || this.positionNav === 'right')) {
-        return {
-          height: this.wrapperHeight + 'px'
-        };
+        const height = (this.$remUnit && `${this.wrapperHeight / this.$remUnit}rem`) || `${this.wrapperHeight}px`
+        return {height};
       } else {
         return null;
       }

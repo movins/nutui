@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      height: this.strokeWidth + 'px'
+      height: (this.$remUnit && `${this.strokeWidth / this.$remUnit}rem`) || `${this.strokeWidth}px`
     };
   },
   computed: {

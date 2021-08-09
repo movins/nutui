@@ -53,10 +53,10 @@ export default {
     styles() {
       let style = {};
       if (this.gutter !== 0) {
-        style = {
-          paddingLeft: this.gutter / 2 + 'px',
-          paddingRight: this.gutter / 2 + 'px'
-        };
+        const gutter = this.gutter / 2
+        const paddingLeft = (this.$remUnit && `${gutter / this.$remUnit}rem`) || `${gutter}px`
+        const paddingRight = (this.$remUnit && `${gutter / this.$remUnit}rem`) || `${gutter}px`
+        style = {paddingLeft, paddingRight};
       }
       return style;
     }

@@ -64,7 +64,7 @@ export default {
 
     setTransform(translateX = 0, type, time = 500, unit = 'px') {
       this.scrollDistance = translateX;
-      translateX = translateX + unit;
+      translateX = (this.$remUnit && `${translateX / this.$remUnit}rem`) || `${translateX}px`
       if (type === 'end') {
         this.$refs.list.style.webkitTransition = `transform ${time}ms cubic-bezier(0.19, 1, 0.22, 1)`;
       } else {

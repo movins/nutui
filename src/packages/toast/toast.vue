@@ -4,10 +4,7 @@
       :id="id"
       :class="toastBodyClass"
       v-if="visible"
-      :style="{
-        bottom: center ? 'auto' : bottom + 'px',
-        'background-color': coverColor,
-      }"
+      :style="style"
       @click="clickCover"
     >
       <div
@@ -68,6 +65,13 @@ export default {
     },
   },
   computed: {
+    style () {
+      let bottom = (this.$remUnit && `${this.bottom / this.$remUnit}rem`) || `${this.bottom}px`
+      bottom = center ? 'auto' : bottom
+      const backgroundColor = this.coverColor
+
+      return {bottom, backgroundColor}
+    },
     cusIcon() {
       return this.icon ? `url("${this.icon}")` : '';
     },

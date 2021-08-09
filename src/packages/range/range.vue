@@ -4,11 +4,7 @@
     <div class="nut-range-box" @click="onClick" :style="{ background: boxColor }">
       <div
         class="nut-range-area"
-        :style="{
-          width: Math.abs(barleft2 - barleft1) + 'px',
-          left: Math.min(barleft2, barleft1) + 'px',
-          background: mainColor
-        }"
+        :style="style"
       >
       </div>
       <nut-range-bar
@@ -131,6 +127,14 @@ export default {
     }
   },
   computed: {
+    style () {
+      let width = Math.abs(this.barleft2 - this.barleft1)
+      width = (this.$remUnit && `${width / this.$remUnit}rem`) || `${width}px`
+      let left = Math.abs(this.barleft2 - this.barleft1)
+      left = (this.$remUnit && `${left / this.$remUnit}rem`) || `${left}px`
+      const background = this.mainColor
+      return {width, left, background}
+    },
     total() {
       return this.range[1] - this.range[0];
     },

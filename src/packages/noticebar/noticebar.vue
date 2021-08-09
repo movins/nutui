@@ -90,8 +90,9 @@ export default {
       };
     },
     contentStyle() {
+      const wrapWidth = (this.$remUnit && `${this.wrapWidth / this.$remUnit}rem`) || `${this.wrapWidth}px`
       return {
-        paddingLeft: this.firstRound ? 0 : this.wrapWidth + 'px',
+        paddingLeft: this.firstRound ? 0 : wrapWidth,
         animationDelay: (this.firstRound ? this.delay : 0) + 's',
         animationDuration: this.duration + 's'
       };

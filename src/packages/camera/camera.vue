@@ -23,7 +23,8 @@ const lockMaskScroll = (bodyCls => {
     afterOpen: function() {
       scrollTop = document.scrollingElement.scrollTop || document.body.scrollTop;
       document.body.classList.add(bodyCls);
-      document.body.style.top = -scrollTop + 'px';
+      const top = (this.$remUnit && `${-scrollTop / this.$remUnit}rem`) || `${-scrollTop}px`
+      document.body.style.top = top;
     },
     beforeClose: function() {
       if (document.body.classList.contains(bodyCls)) {

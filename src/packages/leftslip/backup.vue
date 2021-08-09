@@ -95,13 +95,14 @@ export default {
           //起始位置减去 实时的滑动的距离，得到手指实时偏移距离
           this.disX = this.startX - this.moveX;
           // console.log(this.disX);
+          const dis = (this.$remUnit && `${this.disX / this.$remUnit}rem`) || `${this.disX}px`
           if (this.onlyDelBtn) {
             //单一删除，左滑一键删除
             if (this.disX < 0 || this.disX == 0) {
               this.deleteSlider = 'transform:translateX(0px)';
             }
-            this.deleteSlider = 'transform:translateX(-' + this.disX + 'px)';
-            this.delBtnStyle = 'width:' + this.disX + 'px';
+            this.deleteSlider = 'transform:translateX(-' + dis + ')';
+            this.delBtnStyle = 'width:' + dis;
             parentElement.dataset.type = 1; //设置滑动展开隐藏标志位，左滑展开为1，右滑或复位为0
           } else {
             // 如果是向右滑动或者不滑动，不改变滑块的位置
@@ -110,14 +111,16 @@ export default {
               parentElement.dataset.type = 0;
             } else if (this.disX > wd / 4) {
               parentElement.dataset.type = 1;
-              this.deleteSlider = 'transform:translateX(-' + this.disX + 'px)';
+              this.deleteSlider = 'transform:translateX(-' + dis + ')';
               // 最大也只能等于删除按钮宽度
               if (this.disX >= wd) {
                 // parentElement.dataset.type = 1;
                 if (wd >= itemWd) {
-                  this.deleteSlider = 'transform:translateX(-' + (itemWd - 40) + 'px)';
+                  itemWd = (this.$remUnit && `${(itemWd - 40) / this.$remUnit}rem`) || `${itemWd - 40}px`
+                  this.deleteSlider = 'transform:translateX(-' + itemWd + ')';
                 } else {
-                  this.deleteSlider = 'transform:translateX(-' + wd + 'px)';
+                  wd = (this.$remUnit && `${wd / this.$remUnit}rem`) || `${wd}px`
+                  this.deleteSlider = 'transform:translateX(-' + wd + ')';
                 }
               }
             }
@@ -143,10 +146,12 @@ export default {
               parentElement.dataset.type = 0;
             } else if (this.disX < itemWd - 20) {
               parentElement.dataset.type = 1;
-              this.deleteSlider = 'transform:translateX(-50px);';
+              const tran = (this.$remUnit && `${-50 / this.$remUnit}rem`) || `${-50}px`
+              this.deleteSlider = 'transform:translateX(' + tran + ');';
               this.delBtnStyle = ' width:0px;';
             } else {
-              this.deleteSlider = 'transform:translateX(-' + itemWd + 'px);';
+              itemWd = (this.$remUnit && `${itemWd / this.$remUnit}rem`) || `${itemWd}px`
+              this.deleteSlider = 'transform:translateX(-' + itemWd + ');';
               this.delBtnStyle = ' width:' + itemWd + 'px;';
               parentElement.dataset.type = 1;
               this.onlyDelClick();
@@ -162,8 +167,10 @@ export default {
               parentElement.dataset.type = 1;
               if (wd >= itemWd) {
                 //按钮数不可超出整行宽度
-                this.deleteSlider = 'transform:translateX(-' + (itemWd - 40) + 'px)';
+                itemWd = (this.$remUnit && `${(itemWd - 40) / this.$remUnit}rem`) || `${(itemWd - 40)}px`
+                this.deleteSlider = 'transform:translateX(-' + itemWd + ')';
               } else {
+                wd = (this.$remUnit && `${wd / this.$remUnit}rem`) || `${wd}px`
                 this.deleteSlider = 'transform:translateX(-' + wd + 'px)';
               }
             }

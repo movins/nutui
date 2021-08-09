@@ -1,5 +1,5 @@
 <template>
-  <div class="nut-circleprogress" :style="{ height: option.size + 'px', width: option.size + 'px' }">
+  <div class="nut-circleprogress" :style="style">
     <svg :height="option.size" :width="option.size" x-mlns="http://www.w3.org/200/svg">
       <circle :r="option.radius" :cx="option.cx" :cy="option.cy" :stroke="option.backColor" :stroke-width="option.strokeOutWidth" fill="none" />
       <circle
@@ -49,6 +49,12 @@ export default {
     return {};
   },
   computed: {
+    style () {
+      const {size} = this.option
+      const height = (this.$remUnit && `${size / this.$remUnit}rem`) || `${size}px`
+      const width = (this.$remUnit && `${size / this.$remUnit}rem`) || `${size}px`
+      return {height, width}
+    },
     arcLength() {
       let circleLength = Math.floor(2 * Math.PI * this.option.radius);
       let progressLength = (this.progress / 100) * circleLength;

@@ -5,7 +5,7 @@
     @touchmove="onTouchMove"
     @touchend="onTouchEnd"
     @click="onTouchEnd"
-    :style="{ left: posi + 'px', borderColor: mainColor, boxShadow: ani ? '0 0 0 4px ' + subColor : '' }"
+    :style="rangeStyle"
   >
     <span :class="['nut-range-label', { 'nut-range-label-always': showLabelAlways }]" v-if="showLabel" :style="{ background: mainColor }">
       <span class="nut-range-after" :style="{ color: mainColor }">▼</span>
@@ -77,6 +77,12 @@ export default {
     }
   },
   computed: {
+    rangeStyle () {
+      const left = (this.$remUnit && `${this.posi / this.$remUnit}rem`) || `${this.posi}px`
+      const borderColor = this.mainColor
+      const boxShadow = this.ani ? '0 0 0 4px ' + this.subColor : ''
+      return {left, borderColor, boxShadow}
+    },
     total() {
       return this.range[1] - this.range[0];
     }

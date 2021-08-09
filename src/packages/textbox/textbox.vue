@@ -3,7 +3,7 @@
     <div class="txt-area" :class="{ error: errorState, 'num-none': limitShow == false, disabled: disabled }" :style="{ background: textBgColor }">
       <textarea
         :placeholder="placeText"
-        :style="{ height: txtAreaHeight + 'px' }"
+        :style="style"
         v-model="currentValue"
         :disabled="disabled"
         @input="txtIptLength"
@@ -58,6 +58,10 @@ export default {
   },
   mounted() {},
   computed: {
+    style () {
+      const height = (this.$remUnit && `${this.txtAreaHeight / this.$remUnit}rem`) || `${this.txtAreaHeight}px`
+      return {height}
+    },
     currentValue: {
       get() {
         this.txtNum = this.value.length;

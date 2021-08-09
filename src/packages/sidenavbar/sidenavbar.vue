@@ -53,7 +53,9 @@ export default {
     setPaddingLeft(nodeList, level = 1) {
       for (let i = 0; i < nodeList.length; i++) {
         let item = nodeList[i];
-        item.children[0].style.paddingLeft = this.offset * level + 'px';
+        let paddingLeft = this.offset * level
+        paddingLeft = (this.$remUnit && `${paddingLeft / this.$remUnit}rem`) || `${paddingLeft}px`
+        item.children[0].style.paddingLeft = paddingLeft;
         if (!item.className.includes('nut-sidenavbaritem')) {
           this.setPaddingLeft(Array.from(item.children[1].children), ++this.count);
         }

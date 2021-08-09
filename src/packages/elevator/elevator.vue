@@ -1,6 +1,6 @@
 <template>
-  <div class="nut-elevator" :style="{ height: wrapHeight + 'px' }" v-if="dataArray.length > 0">
-    <div class="nut-main" :style="{ height: wrapHeight + 'px' }">
+  <div class="nut-elevator" :style="elevatorStyle" v-if="dataArray.length > 0">
+    <div class="nut-main" :style="elevatorStyle">
       <ul class="nut-elevator-ul" id="nut-elevator-ul">
         <li v-for="item in dataArray" v-bind:key="item.title" class="nut-list-title">
           <h3 class="nut-list-h" :id="item.title">{{ item.title }}</h3>
@@ -28,7 +28,7 @@
           v-bind:key="index"
           :id="'nav' + index"
           class="nut-nav-list"
-          :style="{ height: navListHeight + 'px', lineHeight: navListHeight + 'px' }"
+          :style="navStyle"
           @click="clickNav(item.title, index)"
           >{{ item.title }}</li
         >
@@ -73,11 +73,22 @@ export default {
   computed: {
     navListHeight: function() {
       return this.navHeight;
+    },
+    elevatorStyle () {
+      const height = (this.$remUnit && `${this.wrapHeight / this.$remUnit}rem`) || `${this.wrapHeight}px`
+
+      return {height}
+    },
+    navStyle () {
+      const height = (this.$remUnit && `${this.navListHeight / this.$remUnit}rem`) || `${this.navListHeight}px`
+      const lineHeight = (this.$remUnit && `${this.navListHeight / this.$remUnit}rem`) || `${this.navListHeight}px`
+
+      return {height, lineHeight}
     }
   },
   data() {
     return {
-      wrapHeight: '40',
+      wrapHeight: 40,
       currTitle: '',
       currBox: false
     };

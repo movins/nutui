@@ -44,10 +44,10 @@ export default {
     styles() {
       let style = {};
       if (this.gutter !== 0) {
-        style = {
-          marginLeft: this.gutter / -2 + 'px',
-          marginRight: this.gutter / -2 + 'px'
-        };
+        const gutter = this.gutter / -2
+        const marginLeft = (this.$remUnit && `${gutter / this.$remUnit}rem`) || `${gutter}px`
+        const marginRight = (this.$remUnit && `${gutter / this.$remUnit}rem`) || `${gutter}px`
+        style = {marginLeft, marginRight};
       }
       return style;
     }

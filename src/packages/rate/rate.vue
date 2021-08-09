@@ -6,12 +6,7 @@
       v-for="n in total"
       :key="n"
       @click="onClick($event, n)"
-      :style="{
-        height: size + 'px',
-        width: size + 'px',
-        marginRight: spacing + 'px',
-        backgroundImage: n <= current ? checkedIcon : uncheckedIcon
-      }"
+      :style="itemStyle(n)"
     ></span>
   </div>
 </template>
@@ -58,6 +53,13 @@ export default {
     this.current = this.value;
   },
   methods: {
+    itemStyle (n) {
+      const width = (this.$remUnit && `${this.size / this.$remUnit}rem`) || `${this.size}px`
+      const height = (this.$remUnit && `${this.size / this.$remUnit}rem`) || `${this.size}px`
+      const marginRight = (this.$remUnit && `${this.spacing / this.$remUnit}rem`) || `${this.spacing}px`
+      const backgroundImage = n <= this.current ? this.checkedIcon : this.uncheckedIcon
+      return {width, height, marginRight, backgroundImage}
+    },
     onClick($event, idx) {
       if (this.readOnly) {
         this.$emit('input', this.current);

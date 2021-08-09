@@ -6,7 +6,7 @@
           class="img-item"
           v-for="item in this.list"
           :key="item.id"
-          :style="{ width: width + 'px', height: height + 'px', marginRight: margin + 'px' }"
+          :style="itemStyle"
           @click="delMode == 'tap' ? deleteImg(item.id) : preview(item.id)"
           @touchstart="delMode == 'longtap' ? touchStart(item.id) : ''"
           @touchmove="delMode == 'longtap' ? touchMove(item.id) : ''"
@@ -15,7 +15,7 @@
           <a href="javascript:;"><img :src="item.src" alt=""/></a>
         </div>
       </transition-group>
-      <div class="add-icon" :style="{ width: width + 'px', height: height + 'px' }" v-show="this.list.length < this.max" @click="handleImageClick">
+      <div class="add-icon" :style="iconStyle" v-show="this.list.length < this.max" @click="handleImageClick">
         <i
           ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
             <g fill-rule="evenodd">
@@ -95,6 +95,20 @@ export default {
       hasCamera: false,
       list: []
     };
+  },
+  computed: {
+    itemStyle () {
+      const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`
+      const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`
+      const marginRight = (this.$remUnit && `${this.margin / this.$remUnit}rem`) || `${this.margin}px`
+
+      return {width, height, marginRight}
+    },
+    iconStyle () {
+      const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`
+      const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`
+      return {width, height}
+    }
   },
   watch: {
     imgList: function(val) {

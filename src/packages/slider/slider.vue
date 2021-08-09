@@ -9,7 +9,7 @@
         @touchend="onTouchEnd"
         @click="onTouchEnd"
         @touchcancel="onTouchEnd"
-        :style="{ left: posi + 'px' }"
+        :style="style"
       >
         <span :class="['nut-slider-label', { 'nut-slider-label-always': showLabelAlways }]" v-if="showLabel">{{ current }}</span>
       </div>
@@ -68,6 +68,10 @@ export default {
     },
     cell() {
       return this.total / this.level;
+    },
+    style () {
+      const left = (this.$remUnit && `${this.posi / this.$remUnit}rem`) || `${this.posi}px`
+      return {left}
     }
   },
   methods: {

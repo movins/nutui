@@ -2,68 +2,46 @@
   <div class="nut-countup">
     <template v-if="customBgImg != ''">
       <template v-if="type == 'machine'">
-        <ul class="run-number-machine-img" :style="{ height: numHeight + 'px' }">
+        <ul class="run-number-machine-img" :style="imgStyle">
           <li
             class="run-number-machine-img-li"
             ref="run-number-machine-img-li"
             v-for="(val, index) of machineNum"
             :key="'mImg' + index"
-            :style="{
-              width: numWidth + 'px',
-              height: numHeight + 'px',
-              backgroundImage: 'url(' + customBgImg + ')',
-              backgroundPositionY: prizeY[index] + 'px'
-            }"
+            :style="imgItemStyle(index)"
           ></li>
-          <!-- backgroundPositionY: prizeLevelTrun + 'px', -->
         </ul>
       </template>
       <template v-else>
-        <ul class="run-number-img" :style="{ height: numHeight + 'px' }">
+        <ul class="run-number-img" :style="imgStyle">
           <li
             class="run-number-img-li"
             v-for="(val, index) of num_total_len"
             :key="'cImg' + index"
-            :style="{
-              width: numWidth + 'px',
-              height: numHeight + 'px',
-              left:
-                numWidth * (index > num_total_len - pointNum - 1 ? (index == num_total_len - pointNum ? index * 1.5 : index * 1.3) : index) + 'px',
-              backgroundImage: 'url(' + customBgImg + ')',
-              backgroundPosition: '0 ' + -(String(relNum)[index] * numHeight + customSpacNum * String(relNum)[index]) + 'px',
-              transition: 'all linear ' + during / 10 + 'ms'
-            }"
+            :style="imgItemStyleEx(index)"
           ></li>
           <div
             v-if="pointNum > 0"
             class="pointstyl"
-            :style="{
-              width: numWidth / 2 + 'px',
-              bottom: 0,
-              left: numWidth * (num_total_len - pointNum) * 1.1 + 'px',
-              fontSize: '30px'
-            }"
+            :style="pointStyle"
             >.</div
           >
         </ul>
       </template>
     </template>
     <template v-else>
-      <ul v-if="scrolling" class="run-number" :style="{ height: numHeight + 'px', lineHeight: numHeight + 'px' }">
+      <ul v-if="scrolling" class="run-number" :style="numberStyle">
         <li
           ref="numberItem"
           v-for="(val, index) of num_total_len"
           :key="val"
-          :style="{
-            top: topNumber(index),
-            left: numWidth * (index > num_total_len - pointNum - 1 ? index * 1.1 : index) + 'px'
-          }"
+          :style="numberItemStyle(index)"
           :turn-number="turnNumber(index)"
         >
           <span
             v-for="(item, idx) of to0_10"
             :key="'dote' + idx"
-            :style="{ width: numWidth + 'px', height: numHeight + 'px', lineHeight: numHeight + 'px' }"
+            :style="doteStyle"
           >
             {{ item }}
           </span>
@@ -71,13 +49,7 @@
         <div
           v-if="pointNum > 0"
           class="pointstyl"
-          :style="{
-            width: numWidth / 3 + 'px',
-            height: numHeight + 'px',
-            lineHeight: numHeight + 'px',
-            top: 0,
-            left: numWidth * (num_total_len - pointNum) + 'px'
-          }"
+          :style="pointStyleEx"
           >.</div
         >
       </ul>
@@ -188,7 +160,42 @@ export default {
       typeMachine: ''
     };
   },
-  computed: {},
+  computed: {
+    imgStyle () {
+      const height = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      return {height}
+    },
+    pointStyle () {
+      let width = this.numWidth / 2
+      width = (this.$remUnit && `${width / this.$remUnit}rem`) || `${width}px`
+      const bottom = 0
+      let left = this.numWidth * (this.num_total_len - this.pointNum) * 1.1
+      left = (this.$remUnit && `${left / this.$remUnit}rem`) || `${left}px`
+      const fontSize = (this.$remUnit && `${30 / this.$remUnit}rem`) || `${30}px`
+      return {height, width, bottom, fontSize}
+    },
+    pointStyleEx () {
+      let width = this.numWidth / 3
+      width = (this.$remUnit && `${width / this.$remUnit}rem`) || `${width}px`
+      const top = 0
+      const height = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      const lineHeight = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      let left = this.numWidth * (this.num_total_len - this.pointNum)
+      left = (this.$remUnit && `${left / this.$remUnit}rem`) || `${left}px`
+      return {height, width, lineHeight, top, left}
+    },
+    numberStyle () {
+      const height = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      const lineHeight = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+
+      return {height, lineHeight}
+    },
+    doteStyle () {
+      const height = (this.$remUnit && `${this.numWidth / this.$remUnit}rem`) || `${this.numWidth}px`
+      const lineHeight = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      return {height, lineHeight}
+    }
+  },
   watch: {
     customChangeNum: function(n, o) {
       this.customNumber = n;
@@ -217,6 +224,31 @@ export default {
     this.timer = null;
   },
   methods: {
+    numberItemStyle (index) {
+      let top = this.topNumber(index)
+      top = (this.$remUnit && `${top / this.$remUnit}rem`) || `${top}px`
+      let left = this.numWidth * (index > this.num_total_len - this.pointNum - 1 ? index * 1.1 : index)
+      left = (this.$remUnit && `${left / this.$remUnit}rem`) || `${left}px`
+      return {top, left}
+    },
+    imgItemStyle (index) {
+      const width = (this.$remUnit && `${this.numWidth / this.$remUnit}rem`) || `${this.numWidth}px`
+      const height = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      const backgroundImage = `url(${this.customBgImg})`
+      const backgroundPositionY = (this.$remUnit && `${this.prizeY[index] / this.$remUnit}rem`) || `${this.prizeY[index]}px`
+      return {height, width, backgroundImage, backgroundPositionY}
+    },
+    imgItemStyleEx (index) {
+      const width = (this.$remUnit && `${this.numWidth / this.$remUnit}rem`) || `${this.numWidth}px`
+      const height = (this.$remUnit && `${this.numHeight / this.$remUnit}rem`) || `${this.numHeight}px`
+      let left = this.numWidth * (index > this.num_total_len - this.pointNum - 1 ? (index == this.num_total_len - this.pointNum ? index * 1.5 : index * 1.3) : index)
+      left = (this.$remUnit && `${left / this.$remUnit}rem`) || `${left}px`
+      const backgroundImage = `url(${this.customBgImg})`
+      let backgroundPosition = -(String(relNum)[index] * numHeight + customSpacNum * String(relNum)[index])
+      backgroundPosition = (this.$remUnit && `0 ${backgroundPosition / this.$remUnit}rem`) || `0 ${backgroundPosition}px`
+      const transition = `all linear ${during / 10}ms`
+      return {height, width, left, backgroundImage, backgroundPosition, transition}
+    },
     // 值变化
     valChange() {
       if (this.valFlag) {

@@ -1,6 +1,6 @@
 <template>
-    <div class="nut-luckycard" :style="{height:height+'px',width:width+'px'}">
-        <div class="nut-content" v-html="content" :style="{backgroundColor:backgroundColor,fontSize:fontSize+'px'}"></div>
+    <div class="nut-luckycard" :style="luckycardStyle">
+        <div class="nut-content" v-html="content" :style="contentStyle"></div>
     </div>
 </template>
 
@@ -44,6 +44,20 @@ export default {
     },
     data() {
         return {};
+    },
+    computed: {
+        luckycardStyle () {
+            const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`
+            const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`
+
+            return {height, width}
+        },
+        contentStyle () {
+            const backgroundColor = this.backgroundColor
+            const fontSize = (this.$remUnit && `${this.fontSize / this.$remUnit}rem`) || `${this.fontSize}px`
+
+            return {backgroundColor, fontSize}   
+        }
     },
     methods: {
     },

@@ -72,14 +72,18 @@ export default {
       this.screenHeight = domElem.clientHeight;
       el.style.zIndex = this.zIndex;
       if (this.boundary.left && !el.style.left) {
-        el.style.left = this.boundary.left + 'px';
+        const left = (this.$remUnit && `${this.boundary.left / this.$remUnit}rem`) || `${this.boundary.left}px`
+        el.style.left = left;
       } else if (this.boundary.right && !el.style.right) {
-        el.style.right = this.boundary.right + 'px';
+        const right = (this.$remUnit && `${this.boundary.right / this.$remUnit}rem`) || `${this.boundary.right}px`
+        el.style.right = right;
       }
       if (this.boundary.top && !el.style.top) {
-        el.style.top = this.boundary.top + 'px';
+        const top = (this.$remUnit && `${this.boundary.top / this.$remUnit}rem`) || `${this.boundary.top}px`
+        el.style.top = top;
       } else if (this.boundary.bottom && !el.style.bottom) {
-        el.style.bottom = this.boundary.bottom + 'px';
+        const bottom = (this.$remUnit && `${this.boundary.bottom / this.$remUnit}rem`) || `${this.boundary.bottom}px`
+        el.style.bottom = bottom;
       }
     },
     touchStart(e) {
@@ -129,10 +133,12 @@ export default {
           this.yPum = this.screenHeight - this.elHeight - this.boundary.bottom;
         }
         if (this.direction != 'y') {
-          target.style.left = this.xPum + 'px';
+          const left = (this.$remUnit && `${this.xPum / this.$remUnit}rem`) || `${this.xPum}px`
+          target.style.left = left;
         }
         if (this.direction != 'x') {
-          target.style.top = this.yPum + 'px';
+          const top = (this.$remUnit && `${this.yPum / this.$remUnit}rem`) || `${this.yPum}px`
+          target.style.top = top;
         }
       }
     },
@@ -163,13 +169,17 @@ export default {
         }
       }
       if (this.direction != 'x') {
-        target.style.top = this.yPum + 'px';
+        const top = (this.$remUnit && `${this.yPum / this.$remUnit}rem`) || `${this.yPum}px`
+        target.style.top = top;
       }
     },
     goLeft(target) {
+      const split = (this.$remUnit && 'rem') || 'px'
+      const val = (this.$remUnit && (10 / this.$remUnit)) || 10
+      const left = target.style.left.split(split)[0]
       if (this.boundary.left) {
-        if (target.style.left.split('px')[0] > this.boundary.left) {
-          target.style.left = target.style.left.split('px')[0] - 10 + 'px';
+        if (left > this.boundary.left) {
+          target.style.left = left - val + split;
           requestAniFrame(() => {
             this.goLeft(target);
           });
@@ -177,8 +187,8 @@ export default {
           target.style.left = `${this.boundary.left}px`;
         }
       } else {
-        if (target.style.left.split('px')[0] > 10) {
-          target.style.left = target.style.left.split('px')[0] - 10 + 'px';
+        if (left > val) {
+          target.style.left = left - val + split;
           requestAniFrame(() => {
             this.goLeft(target);
           });
@@ -188,13 +198,17 @@ export default {
       }
     },
     goRight(target, rightLocation) {
-      if (rightLocation - parseInt(target.style.left.split('px')[0]) > 10) {
-        target.style.left = parseInt(target.style.left.split('px')[0]) + 10 + 'px';
+      const split = (this.$remUnit && 'rem') || 'px'
+      const val = (this.$remUnit && (10 / this.$remUnit)) || 10
+      const left = target.style.left.split(split)[0]
+      if (rightLocation - parseFloat(left) > val) {
+        target.style.left = parseFloat(left) + val + split;
         requestAniFrame(() => {
           this.goRight(target, rightLocation);
         });
       } else {
-        target.style.left = rightLocation + 'px';
+        rightLocation = (this.$remUnit && `${rightLocation / this.$remUnit}rem`) || `${rightLocation}px`
+        target.style.left = rightLocation;
       }
     }
   },

@@ -67,7 +67,7 @@ export default {
   computed: {
     style () {
       let bottom = (this.$remUnit && `${this.bottom / this.$remUnit}rem`) || `${this.bottom}px`
-      bottom = center ? 'auto' : bottom
+      bottom = this.center ? 'auto' : bottom
       const backgroundColor = this.coverColor
 
       return {bottom, backgroundColor}

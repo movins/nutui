@@ -244,9 +244,9 @@ export default {
       let left = this.numWidth * (index > this.num_total_len - this.pointNum - 1 ? (index == this.num_total_len - this.pointNum ? index * 1.5 : index * 1.3) : index)
       left = (this.$remUnit && `${left / this.$remUnit}rem`) || `${left}px`
       const backgroundImage = `url(${this.customBgImg})`
-      let backgroundPosition = -(String(relNum)[index] * numHeight + customSpacNum * String(relNum)[index])
+      let backgroundPosition = -(String(this.relNum)[index] * this.numHeight + this.customSpacNum * String(this.relNum)[index])
       backgroundPosition = (this.$remUnit && `0 ${backgroundPosition / this.$remUnit}rem`) || `0 ${backgroundPosition}px`
-      const transition = `all linear ${during / 10}ms`
+      const transition = `all linear ${this.during / 10}ms`
       return {height, width, left, backgroundImage, backgroundPosition, transition}
     },
     // 值变化

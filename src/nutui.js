@@ -143,6 +143,8 @@ import './packages/numberkeyboard/numberkeyboard.scss';
 import CollapseItem from './packages/collapseitem/index.js';
 import './packages/collapseitem/collapseitem.scss';
 
+import { ClickOutside, InView, TransferDom } from './directives';
+
 const packages = {
   Cell,
   Dialog,
@@ -303,5 +305,8 @@ export default {
   ...components,
   ...filters,
   ...directives,
-  ...methods
+  ...methods,
+  ClickOutside,
+  InView,
+  TransferDom
 };

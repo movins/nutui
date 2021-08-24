@@ -3,9 +3,15 @@
     <div class="nut-cell-box" @click="clickCell">
       <slot name="avatar"></slot>
       <div class="nut-cell-left">
-        <span class="nut-cell-title"
-          ><slot name="title">{{ title }}</slot></span
-        >
+        <div class="nut-cell-left-c">
+          <span class="nut-cell-title"
+            ><slot name="title">{{ title }}</slot></span
+          >
+          <span v-if="value" class="nut-cell-value"
+            ><slot name="value">{{ value }}</slot></span
+          >
+        </div>
+
         <span class="nut-cell-sub-title"
           ><slot name="sub-title">{{ subTitle }}</slot></span
         >
@@ -38,6 +44,10 @@ export default {
       default: ''
     },
     desc: {
+      type: String,
+      default: ''
+    },
+    value: {
       type: String,
       default: ''
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="demo-list">
     <h4>基本用法</h4>
-    <nut-cell title="我是标题" desc="描述文字" @click-cell="clickEvnt" to="/index"> </nut-cell>
+    <nut-cell title="我是标题" desc="描述文字22" value="描述值" @click-cell="clickEvnt" to="/index">wwewewwe</nut-cell>
     <nut-cell :is-link="true" link-url="//m.jd.com" :show-icon="true" title="带链接" target="_target"> </nut-cell>
     <h4>通过Slot插槽分发内容</h4>
     <div>

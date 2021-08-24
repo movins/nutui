@@ -18,11 +18,18 @@
     flex: 1;
     flex-direction: column;
   }
-  .nut-cell-title {
-    display: block;
+  .nut-cell-left-c {
+    display: flex;
     line-height: $line-height-base;
     font-size: $font-size-base;
     color: $title-color;
+  }
+  .nut-cell-title {
+    display: block;
+  }
+  .nut-cell-value {
+    display: block;
+    margin-left: 10px;
   }
   .nut-cell-sub-title {
     display: block;

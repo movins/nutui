@@ -11,7 +11,7 @@
             </div>
           </div>
 
-          <div class="timelineitem-line"></div>
+          <div class="timelineitem-line" :style="lineStyle"></div>
         </div>
 
         <div class="timelineitem-right">
@@ -42,6 +42,11 @@ export default {
     pointColor: {
       type: String,
       default: '#fa2e05'
+    },
+    // 轴线样式
+    lineStyle: {
+      type: Object,
+      default: {}
     }
   },
   data() {

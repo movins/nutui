@@ -1,7 +1,7 @@
 <template>
   <div v-if="destroy" :class="['nut-camera-wrapper', customClass]" :id="id">
     <transition :name="animation ? 'nutFade' : ''">
-      <div class="nut-camera-video" @click="modalClick" v-show="curVisible"><video ref='video' @error="handleVideoError"></video></div>
+      <div class="nut-camera-video" @click="modalClick" v-show="curVisible"><video ref="video" @error="handleVideoError"></video></div>
     </transition>
     <transition :name="animation ? 'nutEase' : ''">
       <div class="nut-camera-box" v-show="curVisible" @click="modalClick">
@@ -23,7 +23,7 @@ const lockMaskScroll = (bodyCls => {
     afterOpen: function() {
       scrollTop = document.scrollingElement.scrollTop || document.body.scrollTop;
       document.body.classList.add(bodyCls);
-      const top = (this.$remUnit && `${-scrollTop / this.$remUnit}rem`) || `${-scrollTop}px`
+      const top = (this.$remUnit && `${-scrollTop / this.$remUnit}rem`) || `${-scrollTop}px`;
       document.body.style.top = top;
     },
     beforeClose: function() {
@@ -41,7 +41,7 @@ const oneOf = (value, validList) => {
     }
   }
   return false;
-}
+};
 export default {
   name: 'nut-camera',
   mixins: [locale],
@@ -51,8 +51,8 @@ export default {
       default: ''
     },
     orient: {
-      validator (value) {
-        return oneOf(value, ['auto', 'portrait', 'landscape'])
+      validator(value) {
+        return oneOf(value, ['auto', 'portrait', 'landscape']);
       },
       default: 'auto'
     },
@@ -123,31 +123,38 @@ export default {
       });
     }
   },
+  destroyed() {
+    this.stopMedia();
+  },
   computed: {
-    canvas () {
-      return this.canvasDom || (this.canvasDom = document.createElement('canvas'))
+    canvas() {
+      return this.canvasDom || (this.canvasDom = document.createElement('canvas'));
     }
   },
   methods: {
-    toDataURL (source, w, h, type) {
+    toDataURL(source, w, h, type) {
       this.canvas.width = w || 0;
       this.canvas.height = h || 0;
       const context = this.canvas.getContext('2d');
-      context.drawImage(source, 0, 0, w, h, 0, 0, w, h)
-      return this.canvas.toDataURL(type || 'image/png')
+      context.drawImage(source, 0, 0, w, h, 0, 0, w, h);
+      return this.canvas.toDataURL(type || 'image/png');
     },
     // 将录像成图片
-    snapshot (imageType) {
+    snapshot(imageType) {
       const video = this.$refs.video;
-      return (video && this.toDataURL(video, this.width, this.height, imageType)) || null;
+      const width = this.width;
+      const height = this.height;
+      return (video && this.toDataURL(video, width, height, imageType)) || null;
     },
-    handleVideoError () {
+    stopMedia() {
       const video = this.$refs.video;
-      video && video.stop();
+      const tracks = (video && video.srcObject.getTracks()) || [];
+      tracks.forEach(media => {
+        media && media.stop();
+      });
     },
-    // 获取录像流到video中
-    async startCamera () {
-
+    handleVideoError() {
+      this.stopMedia();
     },
     modalClick() {
       if (!this.closeOnClickModal) {
@@ -159,6 +166,8 @@ export default {
       this.canDestroy ? '' : (this.destroy = false);
     },
     close(target) {
+      this.stopMedia();
+
       this.$emit('close', target);
       this.$emit('close-callback', target);
       this.todestroy();
@@ -167,20 +176,25 @@ export default {
       }
       this.curVisible = false;
     },
-    async show () {
+    async show() {
       this.curVisible = true;
       let result = false;
+      const video = this.$refs.video;
+      const width = this.width;
+      const height = this.height;
       try {
-        const stream = await getUserMedia({ video: { width: this.width, height: this.height } });
+        const stream = await getUserMedia({ video: { width, height } });
         if (stream) {
-          const video = this.$refs.video;
-          const CompatibleURL = window.URL || window.webkitURL;
-          video.src = CompatibleURL.createObjectURL(stream);
+          try {
+            const CompatibleURL = window.URL || window.webkitURL;
+            video.src = CompatibleURL.createObjectURL(stream);
+          } catch (error) {
+            video.srcObject = stream;
+          }
           video.play();
           result = true;
         }
-      } catch (error) {
-      }
+      } catch (error) {}
       return result;
     },
 

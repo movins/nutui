@@ -26,7 +26,7 @@
       @cancel-btn-click="cameraShow = false"
       @close="cameraShow = false"
     >
-    <a href="javascript:;" @click="cameraShow = false" :noCancelBtn="true">点我可以直接关闭对话框</a>
+      <a href="javascript:;" @click="cameraShow = false" :noCancelBtn="true">点我可以直接关闭对话框</a>
     </nut-camera>
   </div>
 </template>
@@ -45,7 +45,9 @@ export default {
   methods: {
     showCamera1: async function() {
       const options = {
-        closeOnPopstate: true
+        closeOnPopstate: true,
+        with: 411,
+        height: 731
       };
 
       const result = await this.$camera(options).show();

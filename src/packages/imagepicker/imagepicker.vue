@@ -23,14 +23,12 @@
               <rect transform="rotate(90 8 8)" y="6" width="16" height="4" rx="2"></rect>
             </g></svg
         ></i>
-        <input v-if="!camera || !hasCamera" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
+        <input :capture="capture" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { enumerateDevices } from '../../utils/devices';
-
 export default {
   name: 'nut-imagepicker',
   props: {
@@ -50,9 +48,9 @@ export default {
       type: [String, Number],
       default: 5
     },
-    camera: {
-      type: Boolean,
-      default: false
+    capture: {
+      type: String,
+      default: ''
     },
     max: {
       //允许上传的最大数量
@@ -92,22 +90,21 @@ export default {
   data() {
     return {
       timeOutEvent: 0,
-      hasCamera: false,
       list: []
     };
   },
   computed: {
-    itemStyle () {
-      const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`
-      const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`
-      const marginRight = (this.$remUnit && `${this.margin / this.$remUnit}rem`) || `${this.margin}px`
+    itemStyle() {
+      const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`;
+      const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`;
+      const marginRight = (this.$remUnit && `${this.margin / this.$remUnit}rem`) || `${this.margin}px`;
 
-      return {width, height, marginRight}
+      return { width, height, marginRight };
     },
-    iconStyle () {
-      const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`
-      const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`
-      return {width, height}
+    iconStyle() {
+      const width = (this.$remUnit && `${this.width / this.$remUnit}rem`) || `${this.width}px`;
+      const height = (this.$remUnit && `${this.height / this.$remUnit}rem`) || `${this.height}px`;
+      return { width, height };
     }
   },
   watch: {
@@ -117,14 +114,9 @@ export default {
   },
   mounted() {
     this.list = this.imgList;
-    this.camera && this.testDevice()
   },
   methods: {
-    async testDevice () {
-      const [, videoNum,] = await enumerateDevices();
-      this.hasCamera = videoNum > 0
-    },
-    add (files) {
+    add(files) {
       if (files.length > this.max - this.list.length) {
         files = files.filter((item, index) => index < this.max - this.list.length);
       }
@@ -179,8 +171,8 @@ export default {
         });
       }
     },
-    handleImageClick (e) {
-      this.$emit('on-click', this.list.length)
+    handleImageClick(e) {
+      this.$emit('on-click', this.list.length);
     },
     preview(id) {
       this.$emit('imgMsg', {

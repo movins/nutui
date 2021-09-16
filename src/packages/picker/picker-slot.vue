@@ -81,7 +81,7 @@ export default {
     },
 
     setRollerStyle(index) {
-      const val = (this.$remUnit && `${104 / this.$remUnit}rem`) || '104px';
+      const val = (this.$remUnit && `${(this.$fontSize + 90) / this.$remUnit}rem`) || '104px';
       return `transform: rotate3d(1, 0, 0, ${-this.rotation * index}deg) translate3d(0px, 0px, ${val})`;
     },
 

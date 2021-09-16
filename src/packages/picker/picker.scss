@@ -22,13 +22,13 @@
   }
 }
 .nut-picker-panel {
-  height: 252px;
+  height: 100%;
   display: flex;
 }
 .nut-picker-list {
   flex: 1;
   position: relative;
-  height: 252px;
+  height: 100%;
   overflow: hidden;
   text-align: center;
   .nut-picker-list-panel {

@@ -1,20 +1,20 @@
 <template>
   <div class="nut-imagepicker">
     <div class="img-list">
-      <transition-group :name="animation ? 'nutEase' : ''">
+      <template v-for="(item, index) in this.list">
         <div
           class="img-item"
-          v-for="item in this.list"
           :key="item.id"
+          v-if="index < max"
           :style="itemStyle"
-          @click="delMode == 'tap' ? deleteImg(item.id) : preview(item.id)"
-          @touchstart="delMode == 'longtap' ? touchStart(item.id) : ''"
-          @touchmove="delMode == 'longtap' ? touchMove(item.id) : ''"
-          @touchend="delMode == 'longtap' ? touchEnd(item.id) : ''"
+          @click="delMode === 'tap' ? deleteImg(item.id) : preview(item.id)"
+          @touchstart="delMode === 'longtap' ? touchStart(item.id) : ''"
+          @touchmove="delMode === 'longtap' ? touchMove(item.id) : ''"
+          @touchend="delMode === 'longtap' ? touchEnd(item.id) : ''"
         >
           <a href="javascript:;"><img :src="item.src" alt=""/></a>
         </div>
-      </transition-group>
+      </template>
       <div class="add-icon" :style="iconStyle" v-show="this.list.length < this.max" @click="handleImageClick">
         <i
           ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -23,7 +23,7 @@
               <rect transform="rotate(90 8 8)" y="6" width="16" height="4" rx="2"></rect>
             </g></svg
         ></i>
-        <input :capture="capture" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
+        <input ref="input" :capture="capture" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@ export default {
     delMode: {
       //删除图片的方式，支持tap、longtap
       type: [String],
-      default: 'tap'
+      default: ''
     },
     longTapTime: {
       type: [Number],
@@ -116,6 +116,10 @@ export default {
     this.list = this.imgList;
   },
   methods: {
+    open() {
+      const input = this.$refs.input;
+      input && input.click();
+    },
     add(files) {
       if (files.length > this.max - this.list.length) {
         files = files.filter((item, index) => index < this.max - this.list.length);
@@ -129,43 +133,48 @@ export default {
       });
     },
     addImg(event) {
-      let self = this;
       //限制图片上传数量
       let file = event.target.files;
 
       let fileArr = Array.from(file);
 
-      if (file.length > self.max - self.list.length) {
-        fileArr = fileArr.filter((item, index) => index < self.max - self.list.length);
+      if (this.ismultiple && file.length > this.max - this.list.length) {
+        fileArr = fileArr.filter((item, index) => index < this.max - this.list.length);
       }
 
-      if (self.autoUpload) {
+      if (this.autoUpload) {
         //自动上传
-        self.$emit('imgMsg', {
+        this.$emit('imgMsg', {
           code: 1,
           msg: fileArr
         });
-        self.$emit('img-msg', {
+        this.$emit('img-msg', {
           code: 1,
           msg: fileArr
         });
       } else {
         fileArr.forEach((item, index) => {
           let reader = new FileReader();
-          reader.onload = function(evt) {
-            self.list.push({
+          reader.onload = evt => {
+            const item = {
               id: Math.random(),
               src: evt.target.result
-            });
+            };
+            const list = this.list;
+            if (list.length >= this.max) {
+              list.pop();
+            }
+            list.push(item);
+            this.list = list;
             event.target.value = '';
           };
           reader.readAsDataURL(item);
         });
-        self.$emit('imgMsg', {
+        this.$emit('imgMsg', {
           code: 2,
           msg: fileArr
         });
-        self.$emit('img-msg', {
+        this.$emit('img-msg', {
           code: 2,
           msg: fileArr
         });

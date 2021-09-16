@@ -42,6 +42,17 @@
       "author": "movinliao"
     },
     {
+      "name": "Previewer",
+      "version": "1.0.0",
+      "sort": "2",
+      "chnName": "图片预览",
+      "type": "method",
+      "showDemo": true,
+      "desc": "图片预览",
+      "star": 0,
+      "author": "movinliao"
+    },
+    {
       "name": "Icon",
       "version": "1.0.0",
       "sort": "5",

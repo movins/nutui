@@ -54,10 +54,10 @@ export default {
       currIndex: 1,
       transformY: 0,
       scrollDistance: 0,
-      lineSpacing: this.$fontSize && (this.$fontSize + 20) || 34,
+      lineSpacing: (this.$fontSize && this.$fontSize + 40) || 54,
       rotation: 20,
       timer: null,
-      touchDowned: false,
+      touchDowned: false
     };
   },
   watch: {
@@ -81,7 +81,7 @@ export default {
     },
 
     setRollerStyle(index) {
-      const val = (this.$remUnit && `${104 / this.$remUnit}rem`) || '104px'
+      const val = (this.$remUnit && `${104 / this.$remUnit}rem`) || '104px';
       return `transform: rotate3d(1, 0, 0, ${-this.rotation * index}deg) translate3d(0px, 0px, ${val})`;
     },
 
@@ -101,7 +101,7 @@ export default {
         this.$refs.list.style.webkitTransition = '';
         this.$refs.roller.style.webkitTransition = '';
       }
-      const val = (this.$remUnit && `${translateY / this.$remUnit}rem`) || `${translateY}px`
+      const val = (this.$remUnit && `${translateY / this.$remUnit}rem`) || `${translateY}px`;
       this.$refs.list.style.webkitTransform = `translate3d(0, ${val}, 0)`;
       this.$refs.roller.style.webkitTransform = `rotate3d(1, 0, 0, ${deg})`;
       this.scrollDistance = translateY;
@@ -148,7 +148,7 @@ export default {
       event.preventDefault();
 
       this.touchDowned = true;
-      let {changedTouches = []} = event 
+      let { changedTouches = [] } = event;
       changedTouches = (changedTouches.length && changedTouches[0]) || event;
       this.touchParams.startY = changedTouches.pageY;
       this.touchParams.startTime = event.timestamp || event.timeStamp || Date.now();
@@ -158,9 +158,9 @@ export default {
     touchMove(event) {
       event.preventDefault();
       if (!this.touchDowned) {
-        return
+        return;
       }
-      let {changedTouches = []} = event 
+      let { changedTouches = [] } = event;
       changedTouches = (changedTouches.length && changedTouches[0]) || event;
       this.touchParams.lastY = changedTouches.pageY;
       this.touchParams.lastTime = event.timestamp || event.timeStamp || Date.now();
@@ -173,7 +173,7 @@ export default {
       event.preventDefault();
 
       this.touchDowned = false;
-      let {changedTouches = []} = event 
+      let { changedTouches = [] } = event;
       changedTouches = (changedTouches.length && changedTouches[0]) || event;
       this.touchParams.lastY = changedTouches.pageY;
       this.touchParams.lastTime = event.timestamp || event.timeStamp || Date.now();

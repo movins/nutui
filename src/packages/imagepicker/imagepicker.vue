@@ -23,7 +23,16 @@
               <rect transform="rotate(90 8 8)" y="6" width="16" height="4" rx="2"></rect>
             </g></svg
         ></i>
-        <input ref="input" :capture="capture" type="file" name="files" :multiple="ismultiple ? 'multiple' : ''" :accept="accept" @change="addImg" />
+        <input
+          ref="input"
+          :capture="capture"
+          type="file"
+          name="files"
+          :multiple="ismultiple ? 'multiple' : ''"
+          @mousedown="handleMouseDown"
+          :accept="accept"
+          @change="addImg"
+        />
       </div>
     </div>
   </div>
@@ -131,6 +140,9 @@ export default {
           src: url
         });
       });
+    },
+    handleMouseDown(e) {
+      this.$emit('on-mousedown', e);
     },
     addImg(event) {
       //限制图片上传数量

@@ -11,7 +11,7 @@
         <div class="pswp__top-bar">
           <div class="pswp__counter"></div>
           <slot name="button-after"></slot>
-          <img src="../../assets/img/close.png" class="pswp__button pswp__close pswp__button--close" />
+          <!-- <img src="../../assets/img/close.png" class="pswp__button pswp__close pswp__button--close" /> -->
           <slot name="button-before"></slot>
           <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
           <!-- element will get class pswp__preloader--active when preloader is running -->
@@ -138,6 +138,9 @@ export default {
       this.photoswipe.listen('close', () => {
         this.$emit('on-close');
         this.photoswipe = null;
+      });
+      this.photoswipe.listen('pointerDown', () => {
+        this.close();
       });
       this.photoswipe.listen('afterChange', (a, b) => {
         this.$emit('on-index-change', {

@@ -1,6 +1,6 @@
 {
   "name": "@jemoo/emoui",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "一套轻量级移动端Vue组件库",
   "typings": "dist/types/index.d.ts",
   "main": "dist/nutui.js",

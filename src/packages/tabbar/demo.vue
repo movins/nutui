@@ -43,12 +43,14 @@ export default {
         {
           tabTitle: '京东',
           curr: true,
-          icon: ''
+          icon: '',
+          dot: true
         },
         {
           tabTitle: '知乎',
           curr: false,
-          icon: ''
+          icon: '',
+          new: true
         }
       ],
       tabList3: [
@@ -86,7 +88,8 @@ export default {
           curr: false,
           icon: 'http://img20.360buyimg.com/uba/jfs/t1/20004/20/1045/3620/5c0f3d61Eaaec1670/9e59db63983b7b9f.jpg',
           activeIcon: 'http://img14.360buyimg.com/uba/jfs/t1/23967/14/1072/6714/5c0f3d61E0ad8991e/8f741953f6e38f15.jpg',
-          href: 'https://m.jd.com'
+          href: 'https://m.jd.com',
+          dot: true
         }
       ]
     };

@@ -38,7 +38,7 @@ export default {
           tabTitle: '百度',
           curr: false,
           icon: '',
-          num: 13
+          num: 130
         },
         {
           tabTitle: '京东',
@@ -73,7 +73,8 @@ export default {
           curr: false,
           icon: 'https://img14.360buyimg.com/imagetools/jfs/t1/127703/8/1017/7162/5eb93ea5Ed45cba37/fb52534fc21cc790.png',
           activeIcon: 'https://img12.360buyimg.com/imagetools/jfs/t1/119259/20/6245/9589/5eb93ea9E1377964b/0c97f713361320b1.png',
-          href: '###'
+          href: '###',
+          new: true
         },
         {
           tabTitle: '购物车',

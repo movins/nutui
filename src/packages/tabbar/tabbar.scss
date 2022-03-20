@@ -40,25 +40,25 @@
   position: relative;
   .num {
     position: absolute;
+    width: 36px;
+    height: 18px;
     background: #fa2c19;
-    border: 1px solid #fff;
-    border-radius: 7px;
+    border-radius: 9px;
+    line-height: 18px;
     text-align: center;
     top: -2px;
-    right: -7px;
-    -webkit-box-shadow: 0 0 0 1px #fff;
-    box-shadow: 0 0 0 1px #fff;
-    font-size: $font-size-small;
+    right: -18px;
     color: #fff;
+    font-weight: normal;
     z-index: 1;
   }
   .dot {
     position: absolute;
     background: #fa2c19;
     border-radius: 50%;
-    width: 8px;
-    height: 8px;
-    right: -7px;
+    width: 8px; /*px*/
+    height: 8px; /*px*/
+    right: -7px; /*px*/
   }
 }
 .icon-box .icon {

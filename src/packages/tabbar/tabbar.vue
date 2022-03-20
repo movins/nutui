@@ -8,8 +8,8 @@
       v-on:click="switchTabs(value, index)"
     >
       <span class="icon-box">
-        <b class="num" v-if="value.num">{{ (value.num >= 100 && value.num) || '99+' }}</b>
-        <b class="num" v-if="value.new">NEW</b>
+        <b class="num" v-if="value.num">{{ (value.num < 100 && value.num) || '99+' }}</b>
+        <b class="num" v-else-if="value.new">new</b>
         <b class="dot" v-else-if="value.dot"></b>
         <template v-if="value.icon">
           <div class="icon" :style="{ backgroundImage: `url(${index == currIndex ? value.activeIcon : value.icon})` }"></div>

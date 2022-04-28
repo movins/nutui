@@ -56,6 +56,14 @@ export default {
       default() {
         return {};
       }
+    },
+    onClose: {
+      type: Function,
+      default: null
+    },
+    onChange: {
+      type: Function,
+      default: null
     }
   },
   computed: {
@@ -137,15 +145,16 @@ export default {
       this.photoswipe.init();
       this.photoswipe.listen('close', () => {
         this.$emit('on-close');
+        this.onClose && this.onClose();
         this.photoswipe = null;
       });
       this.photoswipe.listen('pointerDown', () => {
         this.close();
       });
       this.photoswipe.listen('afterChange', (a, b) => {
-        this.$emit('on-index-change', {
-          currentIndex: this.photoswipe.getCurrentIndex()
-        });
+        const currentIndex = this.photoswipe.getCurrentIndex();
+        this.$emit('on-index-change', currentIndex);
+        this.onChange && this.onChange(currentIndex);
       });
     },
     show(index = 0) {
